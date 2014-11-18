@@ -1,0 +1,43 @@
+#
+# This file is a configuration file of the Monaggre project.
+# This version is provided as a reference.
+#
+
+application: monaggre
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: true
+
+libraries:
+- name: webapp2
+  version: '2.5.2'
+- name: jinja2
+  version: '2.6'
+- name: pycrypto
+  version: '2.6'
+
+builtins:
+- deferred: on
+#- appstats: on
+
+handlers:
+- url: /assets
+  static_dir: static/assets
+
+- url: /revision
+  static_files: static/revision
+  upload: static/revision
+  mime_type: text/plain
+  expiration: 10m
+
+- url: /robots\.txt
+  static_files: static/robots.txt
+  upload: static/robots.txt
+
+- url: /ui.*
+  script: monaggre.iface_app
+  login: required
+
+- url: /.*
+  script: monaggre.default_app
